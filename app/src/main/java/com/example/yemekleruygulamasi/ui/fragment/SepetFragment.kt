@@ -37,7 +37,6 @@ class SepetFragment : Fragment() {
             Log.e("SepetFragment", "Yeni sepet listesi: $yeniListe")
             adapter = SepetAdapter(requireContext(), mutableListOf(), viewModel)
 
-            // RecyclerView'a adapter'ı atama
             binding.rvSepet.adapter = adapter
             adapter.guncelle(yeniListe)
 
