@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+            <variable
+                name="detayToolbar"
+                type="String" />
+        <variable
+            name="yemekDetayFragment"
+            type="com.example.yemekleruygulamasi.ui.fragment.DetayFragment" />
+        <variable
+            name="yemekNesnesi"
+            type="com.example.yemekleruygulamasi.data.entity.Yemekler" />
+        <variable
+            name="counter"
+            type="Integer" />
+        <variable
+            name="sepeteYemekGetirNesnesi"
+            type="com.example.yemekleruygulamasi.data.entity.SepeteYemekGetir" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.DetayFragment">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarDetay"
+            app:title="@{detayToolbar}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivResim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarDetay" />
+
+        <TextView
+            android:id="@+id/twFiyat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text='@{yemekNesnesi.yemek_fiyat+"₺"}'
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivResim" />
+
+        <TextView
+            android:id="@+id/tvYemekAdi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@{yemekNesnesi.yemek_adi}"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/twFiyat" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> yemekDetayFragment.fabButtonPlus(tvAdet.getText().toString(),tvGuncelFiyat.getText().toString())}"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="48dp"
+            android:clickable="true"
+            android:src="@drawable/button_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvAdet"
+            app:layout_constraintTop_toBottomOf="@+id/tvYemekAdi" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabMinus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> yemekDetayFragment.fabButtonMinus(tvAdet.getText().toString(),tvGuncelFiyat.getText().toString())}"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:src="@drawable/baseline_horizontal_rule_24"
+            app:layout_constraintEnd_toStartOf="@+id/tvAdet"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvYemekAdi" />
+
+        <TextView
+            android:id="@+id/tvAdet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@{String.valueOf(counter)}"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/fabPlus"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fabMinus"
+            app:layout_constraintTop_toBottomOf="@+id/tvYemekAdi" />
+
+        <Button
+            android:id="@+id/buttonEkle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:onClick="@{()-> yemekDetayFragment.sepeteKaydet(sepeteYemekGetirNesnesi.kullanici_adi,Integer.valueOf(tvAdet.getText().toString()))}"
+            android:textSize="16sp"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvGuncelFiyat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginBottom="16dp"
+            android:text='@{String.format("%d ₺", counter * yemekNesnesi.yemek_fiyat)}'
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
